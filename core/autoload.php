@@ -4,7 +4,7 @@ namespace Kreme;
 
 use Mustache_Autoloader;
 
-require_once __DIR__ . '/libs/mustache/src/Mustache/Autoloader.php';
+require_once __DIR__ . '/libs/mustache/Autoloader.php';
 Mustache_Autoloader::register();
 
 spl_autoload_register(
