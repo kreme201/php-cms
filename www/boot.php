@@ -6,7 +6,7 @@ if ( 0 === strpos( $parsed_url, '/assets' ) && file_exists( __DIR__ . $parsed_ur
 	// 파일 정보 가져오기
 	$file_path = __DIR__ . $parsed_url;
 	$file_size = filesize( $file_path );
-	$file      = fopen( $file_path, 'rb' );
+	$file = fopen( $file_path, 'rb' );
 
 	// 헤더 설정
 	header( "Content-Type: " . mime_content_type( $file_path ) );
@@ -14,15 +14,15 @@ if ( 0 === strpos( $parsed_url, '/assets' ) && file_exists( __DIR__ . $parsed_ur
 	header( 'Accept-Ranges: bytes' );
 
 	$start = 0;
-	$end   = $file_size - 1;
+	$end = $file_size - 1;
 
 	if ( isset( $_SERVER['HTTP_RANGE'] ) ) {
 		// 범위 요청 처리
 		$range = $_SERVER['HTTP_RANGE'];
-		[ $unit, $range ] = explode( '=', $range, 2 );
+		list( $unit, $range ) = explode( '=', $range, 2 );
 		if ( $unit == 'bytes' ) {
-			[ $range, $extra_ranges ] = explode( ',', $range, 2 );
-			[ $start, $end ] = explode( '-', $range );
+			list( $range, $extra_ranges ) = explode( ',', $range, 2 );
+			list( $start, $end ) = explode( '-', $range );
 			$start = intval( $start );
 			if ( $end != '' ) {
 				$end = intval( $end );
@@ -52,7 +52,7 @@ if ( 0 === strpos( $parsed_url, '/assets' ) && file_exists( __DIR__ . $parsed_ur
 }
 
 echo '<pre>';
-print_r( [
+print_r( [ 
 	'parsed_url' => $parsed_url,
 ] );
 echo '</pre>';

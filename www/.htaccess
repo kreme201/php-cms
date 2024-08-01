@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # PHP 확장자로 끝나는 모든 요청을 403 Forbidden 에러로 처리
+    RewriteRule ^(.+)\.php$ /$1 [L,R=301]
+
+    RewriteRule ^(.*)$ /public/$1 [L]
+</IfModule>
