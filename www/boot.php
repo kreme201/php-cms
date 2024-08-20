@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/core/functions/mime-types.php';
+
 $parsed_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if (0 === strpos($parsed_url, '/assets') && file_exists(__DIR__ . $parsed_url)) {
@@ -9,7 +11,7 @@ if (0 === strpos($parsed_url, '/assets') && file_exists(__DIR__ . $parsed_url)) 
     $file      = fopen($file_path, 'rb');
 
     // 헤더 설정
-    header("Content-Type: " . mime_content_type($file_path));
+    header("Content-Type: " . get_mime_type($file_path));
     header("Content-Length: " . $file_size);
     header('Accept-Ranges: bytes');
 
@@ -19,10 +21,10 @@ if (0 === strpos($parsed_url, '/assets') && file_exists(__DIR__ . $parsed_url)) 
     if (isset($_SERVER['HTTP_RANGE'])) {
         // 범위 요청 처리
         $range = $_SERVER['HTTP_RANGE'];
-        list($unit, $range) = explode('=', $range, 2);
+        [$unit, $range] = explode('=', $range, 2);
         if ($unit == 'bytes') {
-            list($range, $extra_ranges) = explode(',', $range, 2);
-            list($start, $end) = explode('-', $range);
+            [$range, $extra_ranges] = explode(',', $range, 2);
+            [$start, $end] = explode('-', $range);
             $start = intval($start);
             if ($end != '') {
                 $end = intval($end);
